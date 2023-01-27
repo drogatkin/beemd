@@ -1,0 +1,10 @@
+<div class="form_header">@label.title@</div>
+
+<form name="showmd" method="POST" @SPA{@true(onsubmit="event.preventDefault(); submitPage('@contextpath@@request.getServletPath*()*@/', location.hash, '#book')")@}@>
+
+<div><div>@label.name@</div>@.ui.field*(name,java.lang.Object^@model@)*@</div>
+<div><label>@label.document@</label>@.model.document@</div>
+<hr> 
+
+
+</form>
