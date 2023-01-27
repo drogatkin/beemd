@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class Listmd extends Tabular<Collection<MdData>, BeemdModel> {
 	protected Collection< MdData > getTabularData(long pos, int size) {
 		String path = getParameterValue("location", System.getProperty("user.home"), 0);
-		File cwd = new File(path);
+		File cwd = new File(path).getAbsoluteFile() ;
 		File [] content = cwd.listFiles();
 		Arrays.sort(content);
 		ArrayList<MdData> result = new ArrayList<>();
