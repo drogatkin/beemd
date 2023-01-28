@@ -234,6 +234,13 @@
         <value>/src/res/template/*.htmt</value>
      </operator>
   </expression>
+  
+  <expression name="WEBBEE_MOB_VIEWS">
+     <operator name="append">
+        <value variable="WEBBEE_HOME"/>
+        <value>/src/res/template/mobile/*.htmt</value>
+     </operator>
+  </expression>
 
   <expression name="WEBBEE_LABELS">
      <operator name="append">
@@ -439,6 +446,8 @@
          <parameter type="path" variable="WEBBEE_VIEWS_JSON"></parameter>
          <parameter>A WEB-INF/res/view</parameter>
          <parameter type="path" variable="WEBBEE_VIEWS"></parameter>
+         <parameter>A WEB-INF/res/view/mobile</parameter>
+         <parameter type="path" variable="WEBBEE_MOB_VIEWS"></parameter>
          <!-- text/labels properties resources -->
          <parameter>A WEB-INF/res/text/</parameter>
          <parameter type="path" variable="WEBBEE_LABELS"></parameter>
