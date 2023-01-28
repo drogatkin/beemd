@@ -20,16 +20,16 @@ font-weight: bold;
 
 td {
 background: #FAFAFA;
-text-align: center;
+text-align: left;
 }
 
 /* Cells in even rows (2,4,6...) are one color */
-tr:nth-child(even) td { background: #F1F1F1; }  
+tr:nth-child(even) td { background: #F2F1F1; }  
 
 /* Cells in odd rows (1,3,5...) are another (excludes header cells)  */
 tr:nth-child(odd) td { background: #FEFEFE; } 
 
-tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
+tr td:hover { background: #777; color: #FFF; } /* Hover cell effect! */
 </style>
 
 <div class="form_header">@label.title@</div>
@@ -41,10 +41,10 @@ tr td:hover { background: #666; color: #FFF; } /* Hover cell effect! */
 </tr>
 @model(
    <tr>
-      <td>@element.directory{@true(folder)@@false(md)@}@</td>
-      <td align ="left">@element.directory{@true(<a href="#Listmd?location=@element.path@">@element.name@</a>)@
+      <td><img src="@request.getContextPath*()*@/image/@element.directory{@true(folder)@@false(file)@}@.png" width="45" height="32"></td>
+      <td >@element.directory{@true(<a href="#Listmd?location=@element.path@">@element.name@</a>)@
                        @false(<a href="#Showmd?location=@element.path@">@element.name@</a>)@}@</td>
-      <td>never</td>
+      <td>@element.last_date@</td>
    </tr>
 )@
 </table>

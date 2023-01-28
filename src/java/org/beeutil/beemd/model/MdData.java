@@ -29,8 +29,9 @@ public class MdData extends SimpleCoordinator<BeemdModel>  {
 
 	@FormField(presentSize = 68, presentRows = 6)
 	public String document;
-
-	public Date lastd_date;
+	
+    @FormField
+	public Date last_date;
     
     
     public String getDocumentData(String _path) {

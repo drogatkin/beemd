@@ -13,6 +13,7 @@ import org.beeutil.beemd.model.MdData;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 public class Listmd extends Tabular<Collection<MdData>, BeemdModel> {
 	protected Collection< MdData > getTabularData(long pos, int size) {
 		String path = getParameterValue("location", System.getProperty("user.home"), 0);
@@ -26,6 +27,7 @@ public class Listmd extends Tabular<Collection<MdData>, BeemdModel> {
 		       md . path = ""+parent;
 		      md.name =  "..";
 		      md.directory = true;
+		      md.last_date = new Date(parent.lastModified());
 		      result.add(md);
 		}
 		for (File entry: content) {
@@ -34,11 +36,13 @@ public class Listmd extends Tabular<Collection<MdData>, BeemdModel> {
 		       md . path = ""+entry;
 		      md.name =  entry.getName();
 		      md.directory = true;
+		      md.last_date = new Date(entry.lastModified());
 		       result.add(md);
 		    } else if (entry.getName().endsWith(MdData.MD)) {
 		         MdData md = new MdData(getAppModel() );
 		       md . path = ""+entry;
 		       md.name =  entry.getName();
+		       md.last_date = new Date(entry.lastModified());
 		       result.add(md);
 		    }
 		}
