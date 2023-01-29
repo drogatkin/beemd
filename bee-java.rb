@@ -8,9 +8,10 @@ doc_directory=doc
 build_file ="${project}.jar"
  mobile= "y"
  domain ="org"
-resources ="${domain}.${project}.resources"
+resources ="/commonmark/src/main/resources"
 manifestf =""
 main_class= "${domain}.${project}.Main"
+extra src=[commonmark-ext-yaml-front-matter/src/main/java,commonmark-ext-task-list-items/src/main/java,commonmark-ext-ins/src/main/java,commonmark-ext-image-attributes/src/main/java,commonmark-ext-heading-anchor/src/main/java,commonmark-ext-gfm-tables/src/main/java,commonmark-ext-gfm-strikethrough/src/main/java,commonmark-ext-autolink/src/main/java]
 
 target clean {
     dependency {true}
@@ -35,6 +36,14 @@ target compile:. {
        newerthan(${source_directory}/.java,${build_directory}/.class)
        assign(main src,~~)
        file_filter(main src,package-info.*)
+       assign(main src,~~)
+      
+       for ext-java:extra src {
+            display(Adding ${ext-java})
+            newerthan(${ext-java}/.java,${build_directory}/.class)
+            array(main src,~~)
+            assign(main src,~~)
+       }
        assign(main src,~~)
        element(main src,0)
        filename(~~)
@@ -69,7 +78,10 @@ target jar {
             ${build_directory}/${build_file},
             -C,
             ${build_directory},
-            ${domain}
+            ${domain},
+           -C,
+            ./${resources},
+             ${domain}
           )
      }
 }
