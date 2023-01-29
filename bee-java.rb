@@ -11,7 +11,7 @@ build_file ="${project}.jar"
 resources ="/commonmark/src/main/resources"
 manifestf =""
 main_class= "${domain}.${project}.Main"
-extra src=[commonmark-ext-yaml-front-matter/src/main/java,commonmark-ext-task-list-items/src/main/java,commonmark-ext-ins/src/main/java,commonmark-ext-image-attributes/src/main/java,commonmark-ext-heading-anchor/src/main/java,commonmark-ext-gfm-tables/src/main/java,commonmark-ext-gfm-strikethrough/src/main/java,commonmark-ext-autolink/src/main/java]
+extra src=[commonmark-ext-yaml-front-matter/src/main/java,commonmark-ext-task-list-items/src/main/java,commonmark-ext-ins/src/main/java,commonmark-ext-image-attributes/src/main/java,commonmark-ext-heading-anchor/src/main/java,commonmark-ext-gfm-tables/src/main/java,commonmark-ext-gfm-strikethrough/src/main/java]
 
 target clean {
     dependency {true}
@@ -43,6 +43,7 @@ target compile:. {
             newerthan(${ext-java}/.java,${build_directory}/.class)
             array(main src,~~)
             assign(main src,~~)
+            array(main src)
        }
        assign(main src,~~)
        element(main src,0)
