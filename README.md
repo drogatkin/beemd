@@ -13,5 +13,9 @@ building **war** file, but any other tool will work too. The name of the applica
 
 ### 3rd party dependency
 The project uses 1 dependency [commonmark](https://github.com/commonmark/commonmark-java.git). Checkout the project, and then copy
-[bee-java.rb](bee-java.rb) there and run **[rb](https://github.com/drogatkin/rust_utilities)**. Modify [env.xml]([env.xml) here to specify the dependency jar location. If you do not
+[bee-java.rb](bee-java.rb) there and run **[rb](https://github.com/drogatkin/rust_utilities)**. Modify [env.xml](env.xml) here to specify the dependency jar location. If you do not
 want to build the *jar*, then you can take it from [Maven Central](https://search.maven.org/search?q=g:org.commonmark).
+
+The project utilizes also WebBee and Aldan3 frameworks for a rapid development SPA web applications. Jar files for the frameworks have to be built, since Maven versions are not available yet.
+ Check out [Aldan3-jdo](https://github.com/drogatkin/aldan3-jdo),  [Aldan3](https://github.com/drogatkin/aldan3), and [WebBee](https://github.com/drogatkin/Webbee). Run 7Bee to build
+*jar* files. And then correct path to them in [env.xml](env.xml).
