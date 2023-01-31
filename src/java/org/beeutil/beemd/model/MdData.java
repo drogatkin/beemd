@@ -4,12 +4,16 @@ import org.aldan3.data.SimpleDataObject;
  import org.commonmark.node.*;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.commonmark.Extension;
+import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
 import org.aldan3.annot.FormField;
 import com.beegman.webbee.util.SimpleCoordinator;
 import org.aldan3.util.Stream;
 import java.io.File;
 import java.util.Date;
 import java.io.FileInputStream;
+import java.util.List;
+import java.util.Arrays;
 
 public class MdData extends SimpleCoordinator<BeemdModel>  {
     public final static String MD = ".md";
@@ -24,7 +28,7 @@ public class MdData extends SimpleCoordinator<BeemdModel>  {
 	@FormField
 	public String path;
 	
-		@FormField
+	@FormField
 	public boolean directory;
 
 	@FormField(presentSize = 68, presentRows = 6)
@@ -44,10 +48,10 @@ public class MdData extends SimpleCoordinator<BeemdModel>  {
         } catch(Exception e) {
             md = e.toString();
         }
+        List<Extension> extensions = Arrays.asList(HeadingAnchorExtension.create());
 	    Parser parser = Parser.builder().build();
         Node document = parser.parse(md);
-        HtmlRenderer renderer = HtmlRenderer.builder().build();
+        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
         return renderer.render(document); 
-       // return renderer.toString();
 	}
 }
