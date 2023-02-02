@@ -18,10 +18,13 @@ public class Listmd extends Tabular<Collection<MdData>, BeemdModel> {
 	protected Collection< MdData > getTabularData(long pos, int size) {
 		String path = getParameterValue("location", System.getProperty("user.home"), 0);
 		File cwd = new File(path).getAbsoluteFile() ;
+		if (".".equals(cwd.getName()))
+		    cwd = cwd.getParentFile();
 		File [] content = cwd.listFiles();
 		Arrays.sort(content);
 		ArrayList<MdData> result = new ArrayList<>();
 		File parent = cwd.getParentFile();
+		//	System.err.printf("parent %s of %s%n", parent, cwd);
 		if (parent != null) {
 		     MdData md = new MdData(getAppModel()) ;
 		       md . path = ""+parent;
