@@ -2,7 +2,7 @@
 
 ## What is this project for?
 If you hold many projects at GitHub, then you may want to create nice **md** files.
-Unless you have a good md editor, you have no idea how a final md file will look.
+Unless you have a good md editor, you have no idea how finally the md file will look.
 The project fills the gap.
 
 ## How to run it
@@ -18,4 +18,4 @@ want to build the *jar*, then you can take it from [Maven Central](https://searc
 
 The project utilizes also WebBee and Aldan3 frameworks for a rapid development SPA web applications. Jar files for the frameworks have to be built, since Maven versions are not available yet.
  Check out [Aldan3-jdo](https://github.com/drogatkin/aldan3-jdo),  [Aldan3](https://github.com/drogatkin/aldan3), and [WebBee](https://github.com/drogatkin/Webbee). Run 7Bee to build
-*jar* files. And then correct path to them in [env.xml](env.xml).
+*jar* files, or take them from release distributions. And then correct path to them in [env.xml](env.xml). WebBee is required to be present to build a final war file, since some resources are taken from it. 
