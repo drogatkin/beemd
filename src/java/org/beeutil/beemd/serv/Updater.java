@@ -33,6 +33,7 @@ public class Updater implements ServiceProvider, Runnable {
     WatchService watcher;
     @Inject
     NotificationService ns;
+    private Thread processor;
     private boolean run;
     public static final String MD = ".md";
 
@@ -46,7 +47,8 @@ public class Updater implements ServiceProvider, Runnable {
 	   try {
          watcher = FileSystems.getDefault().newWatchService();
          run = true;
-         new Thread(this, "watch service").start();
+         processor = new Thread(this, "watch service");
+         processor.start();
 	   } catch(Exception e) {
 	       throw new RuntimeException("The service can't start, because "+e);
 	   }
@@ -64,7 +66,7 @@ public class Updater implements ServiceProvider, Runnable {
                 
                     if (changed.toString().endsWith(MD)) {
                         Path fullPath = dir.resolve(changed);
-                        System.err.printf("changed path %s%n", fullPath);
+                        //System.err.printf("changed path %s%n", fullPath);
                         ns.publish(new WebEvent().setAction("updateMD").setId(changed.toString()).setAttributes(fullPath));
                     }
                }
@@ -90,7 +92,7 @@ public class Updater implements ServiceProvider, Runnable {
     	      Path dirPath = filePath.getParent();
     	      try {
     	        dirPath.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
-    	        System.err.printf("register path %s%n", filePath.getFileName());
+    	        //System.err.printf("register path %s%n", filePath.getFileName());
     	        return filePath.getFileName();
     	      } catch(IOException ioe) {
     	          ioe.printStackTrace();
@@ -117,6 +119,8 @@ public class Updater implements ServiceProvider, Runnable {
 	        } catch(IOException ioe) {
 	            
 	        }
+	   if (processor != null)
+	     processor.interrupt();
 	}
 }
                  
