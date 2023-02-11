@@ -14,7 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 public class WatcherEP extends NotifEndPoint {
     @OnMessage
   	public void fromClient(String file, Session s) {
-  	    // add watcher for a file
+  	    ses = s;
   	    try {
               BeemdModel.notifService.subscribe(file, this);
   	    } catch (Exception e) {
@@ -26,7 +26,6 @@ public class WatcherEP extends NotifEndPoint {
     public void notify(WebEvent event) {
     	if (ses != null)
     		try {
-    			
     			ses.getBasicRemote().sendObject(event);
     		} catch (Exception e) {
     		    LogImpl.log.error(e, "error");

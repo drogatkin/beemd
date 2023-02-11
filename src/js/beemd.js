@@ -4,8 +4,8 @@ function extra_actions(s, ctx) {
 	
 }
 
-function updateMD() {
-	loadInnerPage('/beemd/webbee/', '#Showmd', '#payload')
+function updateMD(path) {
+	loadInnerPage('/beemd/webbee/', '#Showmd?location='+path, '#payload')
 }
 
 function subscribeFor(path) {

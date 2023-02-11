@@ -57,13 +57,15 @@ public class Updater implements ServiceProvider, Runnable {
 	    do {
 	        try {
     	       WatchKey wkey =  watcher.take();
+    	       Path dir = (Path)wkey.watchable();
         	   for (WatchEvent<?> event: wkey.pollEvents()) {
                      // ENTRY_MODIFY
                      final Path changed = (Path) event.context();
                 
                     if (changed.toString().endsWith(MD)) {
-                        System.err.printf("changed path %s%n", changed);
-                        ns.publish(new WebEvent().setAction("updateMD").setId(changed.toString()));
+                        Path fullPath = dir.resolve(changed);
+                        System.err.printf("changed path %s%n", fullPath);
+                        ns.publish(new WebEvent().setAction("updateMD").setId(changed.toString()).setAttributes(fullPath));
                     }
                }
         
@@ -81,18 +83,20 @@ public class Updater implements ServiceProvider, Runnable {
 	    
 	}
 	
-	public void register(String path) {
+	public Path register(String path) {
 	    // check if the path is valid and md file
 	    if (path.endsWith(MD)) {
-	      Path filePath = Paths.get(path);
-	      Path dirPath = filePath.getParent();
-	      System.err.printf("register path %s%n", dirPath);
-	      try {
-	        dirPath.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
-	      } catch(IOException ioe) {
-	          ioe.printStackTrace();
-	      }
+    	      Path filePath = Paths.get(path);
+    	      Path dirPath = filePath.getParent();
+    	      try {
+    	        dirPath.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
+    	        System.err.printf("register path %s%n", filePath.getFileName());
+    	        return filePath.getFileName();
+    	      } catch(IOException ioe) {
+    	          ioe.printStackTrace();
+    	      }
 	    }
+	    return null;
 	}
 	
 	@Override
