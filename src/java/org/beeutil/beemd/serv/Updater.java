@@ -21,6 +21,7 @@ import org.beeutil.beemd.model.BeemdModel;
 import org.aldan3.model.ServiceProvider;
 import java.nio.file.WatchService;
 import java.nio.file.FileSystems;
+import java.nio.file.StandardWatchEventKinds;
 import java.io.IOException;
 import com.beegman.buzzbee.NotificationService;
 import com.beegman.buzzbee.WebEvent;
@@ -60,7 +61,8 @@ public class Updater implements ServiceProvider, Runnable {
                      // ENTRY_MODIFY
                      final Path changed = (Path) event.context();
                 
-                    if (changed.endsWith(MD)) {
+                    if (changed.toString().endsWith(MD)) {
+                        System.err.printf("changed path %s%n", changed);
                         ns.publish(new WebEvent().setAction("updateMD").setId(changed.toString()));
                     }
                }
@@ -79,15 +81,16 @@ public class Updater implements ServiceProvider, Runnable {
 	    
 	}
 	
-	void register(String path) {
+	public void register(String path) {
 	    // check if the path is valid and md file
 	    if (path.endsWith(MD)) {
 	      Path filePath = Paths.get(path);
 	      Path dirPath = filePath.getParent();
+	      System.err.printf("register path %s%n", dirPath);
 	      try {
-	        dirPath.register(watcher);
+	        dirPath.register(watcher, StandardWatchEventKinds.ENTRY_MODIFY);
 	      } catch(IOException ioe) {
-	          
+	          ioe.printStackTrace();
 	      }
 	    }
 	}

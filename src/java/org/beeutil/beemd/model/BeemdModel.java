@@ -5,10 +5,15 @@ package org.beeutil.beemd.model;
 
 import javax.sql.DataSource;
 import java.util.Properties;
+import java.util.Iterator;
+import java.lang.reflect.Field;
 import org.aldan3.data.DOService;
 import org.aldan3.model.Log;
+import org.aldan3.model.ServiceProvider;
+import org.aldan3.annot.Inject;
 
 import com.beegman.buzzbee.NotificationServiceImpl;
+import com.beegman.buzzbee.Subscriber;
 
 import com.beegman.webbee.model.AppModel;
 import com.beegman.webbee.model.Auth;
@@ -45,8 +50,15 @@ public class BeemdModel extends AppModel {
 	@Override
 	protected void initServices() {
 		super.initServices();
-		register(notifService = new NotificationServiceImpl().init(new Properties(), this).start());
-		register(new Updater(this));
+		register(notifService = new NotificationServiceImpl() {
+		        @Override
+	            public void subscribe(String resourceId, Subscriber subscriber) throws NotifException {	
+	                super.subscribe(resourceId, subscriber);
+	                ((Updater)getService(Updater.class.getName())).register(resourceId);
+	            }
+	            
+		    }.init(new Properties(), this).start());
+		register(inject(new Updater(this)));
 	}
 	
 	@Override
@@ -57,4 +69,41 @@ public class BeemdModel extends AppModel {
 		notifService =  null;
 	}
 
+    @Override
+	public <T> T inject(T obj) {
+		if (obj == null) {
+			return null;
+		}
+		for (Field fl : obj.getClass().getDeclaredFields()) { // use cl.getFields() for public with inheritance
+			if (fl.getAnnotation(Inject.class) != null) {
+				try {
+					Class<?> type = fl.getType();
+					Object serv = lookupService(type);
+					System.err.printf("Injecting "+serv+" for "+fl+" of "+type+"\n");
+					assureAccessible(fl).set(obj, serv);
+				} catch (Exception e) {
+					Log.l.error("Exception in injection for " + fl, e);
+				}
+			}
+		}
+		return obj;
+	}
+
+	public Object lookupService(Class<?> type) {
+		Iterator<ServiceProvider> i = iterator();
+		while (i.hasNext()) {
+			ServiceProvider sp = i.next();
+			System.err.printf("Checking %s assign %b%n", sp, sp.getClass().isAssignableFrom(type) );
+			if (sp.getClass() == type || sp.getClass().isAssignableFrom(type) ) // instanceof  ??
+				return sp;
+		}
+		return null;
+	}
+	
+	static protected Field assureAccessible(Field fl) {
+		if (fl.isAccessible())
+			return fl;
+		fl.setAccessible(true);
+		return fl;
+	}
 }

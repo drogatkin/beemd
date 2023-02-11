@@ -10,7 +10,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/notif/web", encoders = NotifEndPoint.WebEventEncoder.class)
+@ServerEndpoint(value = "/notif/web/", encoders = NotifEndPoint.WebEventEncoder.class)
 public class WatcherEP extends NotifEndPoint {
     @OnMessage
   	public void fromClient(String file, Session s) {
