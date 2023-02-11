@@ -47,7 +47,12 @@ tr td:hover { background: #9c9faa; color: #FFF; } /* Hover cell effect! */
       }
       a:hover { background: #777; color: #FFF; }
 </style>
-
+<script>
+    function showMD(path) {
+        loadInnerPage('@contextpath@@request.getServletPath*()*@/', '#Showmd?location='+path, '#payload') // escape special symbols from path
+        subscribeFor(path)
+    }
+</script>
 <div class="form_header">@label.title@</div>
 <table>
 <tr>
@@ -59,7 +64,7 @@ tr td:hover { background: #9c9faa; color: #FFF; } /* Hover cell effect! */
    <tr>
       <td><img src="@request.getContextPath*()*@/image/@element.directory{@true(folder)@@false(file)@}@.png" width="45" height="32"></td>
       <td >@element.directory{@true(<a href="#Listmd?location=@element.path@">@element.name@</a>)@
-                       @false(<a href="#Showmd?location=@element.path@">@element.name@</a>)@}@</td>
+                       @false(<a href="javascript:void(0)" onclick="showMD(@element.path@)">@element.name@</a>)@}@</td>
       <td>@element.last_date@</td>
    </tr>
 )@
