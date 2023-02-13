@@ -19,3 +19,8 @@ want to build the *jar*, then you can take it from [Maven Central](https://searc
 The project utilizes also WebBee and Aldan3 frameworks for a rapid development SPA web applications. Jar files for the frameworks have to be built, since Maven versions are not available yet.
  Check out [Aldan3-jdo](https://github.com/drogatkin/aldan3-jdo),  [Aldan3](https://github.com/drogatkin/aldan3), and [WebBee](https://github.com/drogatkin/Webbee). Run 7Bee to build
 *jar* files, or take them from release distributions. And then correct path to them in [env.xml](env.xml). WebBee is required to be present to build a final war file, since some resources are taken from it. 
+
+The newer version of the viewer adds an instant update of the md view when the
+.md file has been changed. [Buzzbee](https://github.com/drogatkin/Buzzbee) is used for the functionality. You can build the library using
+[7Bee](https://github.com/drogatkin/7Bee) or [RustBee](https://github.com/drogatkin/rust_utilities/tree/master/doc/rustbee). Since js file from the
+library is used, it should be available is a source form as well.
