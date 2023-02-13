@@ -5,7 +5,7 @@ function extra_actions(s, ctx) {
 }
 
 function updateMD(path) {
-	loadInnerPage(baseServURI+'/', '#Showmd?location='+path, '#payload') // escape special symbols from path
+	loadInnerPage(baseServURI, '#Showmd?location='+path, '#payload') // escape special symbols from path
 }
 
 function subscribeFor(path) {
