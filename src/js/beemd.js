@@ -5,7 +5,7 @@ function extra_actions(s, ctx) {
 }
 
 function updateMD(path) {
-	loadInnerPage('/beemd/webbee/', '#Showmd?location='+path, '#payload')
+	loadInnerPage(baseServURI+'/', '#Showmd?location='+path, '#payload') // escape special symbols from path
 }
 
 function subscribeFor(path) {
@@ -13,6 +13,6 @@ function subscribeFor(path) {
 }
 
 function showMD(path) {
-    loadInnerPage('/beemd/webbee/', '#Showmd?location='+path, '#payload') // escape special symbols from path
+    updateMD(path)
     subscribeFor(path)
 }
