@@ -23,4 +23,4 @@ The project utilizes also WebBee and Aldan3 frameworks for a rapid development S
 The newer version of the viewer adds an instant update of the md view when the
 .md file has been changed. [Buzzbee](https://github.com/drogatkin/Buzzbee) is used for the functionality. You can build the library using
 [7Bee](https://github.com/drogatkin/7Bee) or [RustBee](https://github.com/drogatkin/rust_utilities/tree/master/doc/rustbee). Since js file from the
-library is used, it should be available in a source form as well.
+library is used, the library should be available in a source form for a **war** file assembly.
