@@ -6,6 +6,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 import org.commonmark.Extension;
 import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.aldan3.annot.FormField;
 import com.beegman.webbee.util.SimpleCoordinator;
 import org.aldan3.util.Stream;
@@ -48,7 +49,8 @@ public class MdData extends SimpleCoordinator<BeemdModel>  {
         } catch(Exception e) {
             md = e.toString();
         }
-        List<Extension> extensions = Arrays.asList(HeadingAnchorExtension.create());
+        List<Extension> extensions = Arrays.asList(HeadingAnchorExtension.create(), TablesExtension.create());
+
 	    Parser parser = Parser.builder().build();
         Node document = parser.parse(md);
         HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
